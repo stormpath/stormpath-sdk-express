@@ -1,0 +1,27 @@
+{
+  "errors":{
+    "MISSING_COOKIE_MIDDLEWARE": "req.cookies does not exist - please configure cookie middleware",
+    "MISSING_BODY_MIDDLEWARE": "req.body does not exist - please configure body middleware",
+    "SP_CLIENT_UNINITIALIZED": "Stormpath client is not yet initialized",
+    "authorization":{
+      "FORBIDDEN": "You are not permitted to access this resource",
+      "FORBIDDEN_ORIGIN": "Forbidden Origin"
+    },
+    "authentication":{
+      "UNAUTHENTICATED": "Authentication required",
+      "BAD_PASSWORD_BODY": "Missing username or password in post body",
+      "UNKNOWN": "An error has occurred during authentication",
+      "UNSUPPORTED_GRANT_TYPE": "Unsupported grant type"
+    },
+    "xsrf":{
+      "XSRF_MISMATCH": "Invalid XSRF token"
+    },
+    "library":{
+      "SP_APP_UNINITIALIZED": "Stormpath application is not yet initialized"
+    }
+  },
+  "configuration":{
+    "DEFAULT_TOKEN_ENDPOINT": "/oauth/token",
+    "DEFAULT_ACCESS_TOKEN_COOKIE_NAME": "access_token"
+  }
+}
