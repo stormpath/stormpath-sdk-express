@@ -1,7 +1,7 @@
 {
   "name": "stormpath-sdk-express",
   "version": "0.0.1",
-  "main": "lib/stormpath.js",
+  "main": "index.js",
   "description": "Official Stormpath SDK for Express.js",
   "keywords": [
     "token authentication",
