@@ -72,6 +72,7 @@ thoughts! support@stormpath.com
  * [authenticateCookie](#authenticateCookie)
  * [authenticateForToken](#authenticateForToken)
  * [authenticateUsernamePasswordForToken](#authenticateUsernamePasswordForToken)
+ * [logout](#logout)
  * [writeToken](#writeToken)
 
 * [Middleware Factory](#middleware-factory)
@@ -143,6 +144,8 @@ requests and respond with an access token if authentication is successful.
 Depending on the grant type (`password` or `client_credentials`) it delegates to
 [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken)
 or [`authenticateApiKeyForToken`](#authenticateApiKeyForToken).
+
+* The `/logout` endpoint will be provided for ending cookie-based sessions.
 
 
 * The [XSRF Protection](#XSRF) feature will be enabled.  After authentication,
@@ -626,6 +629,22 @@ var app = express();
 app.post('/tokens-r-us',spMiddleware.writeToken);
 ````
 Note: example can also be accomplished with the `tokenEndpoint` option in `spConfig`
+
+
+
+
+#### <a name="logout"></a> logout
+
+This method will delete the XSRF and access token cookies on the client
+
+**Example: manually defining a logout endpoint**
+````
+var spMiddleware = stormpathExpressSdk.createMiddleware({/* options */})
+
+var app = express();
+
+app.get('/logout',spMiddleware.logout);
+````
 
 
 

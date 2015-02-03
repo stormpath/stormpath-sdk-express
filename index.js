@@ -24,6 +24,8 @@ function autoRouterHandler(req,res,next){
       }else{
         res.status(405).end();
       }
+    }else if(url.parse(req.url).pathname===spConfig.logoutEndpoint){
+      context.logout(req,res,next);
     }else{
       context.authenticate(req,res,next);
     }
