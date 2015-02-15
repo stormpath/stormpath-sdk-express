@@ -268,7 +268,7 @@ describe('authenticateUsernamePasswordForToken',function() {
       });
     });
 
-    describe('and {writeAccessTokenToResponseBody: true} spConfig option',function(){
+    describe('and {writeAccessTokenResponse: true} spConfig option',function(){
 
       var app, server;
 
@@ -279,7 +279,7 @@ describe('authenticateUsernamePasswordForToken',function() {
             apiKeyId: '123',
             apiKeySecret: '123',
             appHref: fixture.appHref,
-            writeAccessTokenToResponseBody: true,
+            writeAccessTokenResponse: true,
             scopeFactory: function(req,res,authenticationResult,account,requstedScope,done) {
               done(null,customScope);
             }
@@ -338,7 +338,7 @@ describe('authenticateUsernamePasswordForToken',function() {
       });
     });
 
-    describe('and {writeAccessTokenToResponseBody: true, writeAccessTokenToCookie: false} spConfig options',function(){
+    describe('and {writeAccessTokenResponse: true, writeAccessTokenToCookie: false} spConfig options',function(){
 
       var app;
 
@@ -348,7 +348,7 @@ describe('authenticateUsernamePasswordForToken',function() {
             apiKeyId: '123',
             apiKeySecret: '123',
             appHref: fixture.appHref,
-            writeAccessTokenToResponseBody: true,
+            writeAccessTokenResponse: true,
             writeAccessTokenToCookie: false
           });
           app = express();
