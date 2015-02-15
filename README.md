@@ -281,7 +281,7 @@ respond with the relevant response headers that are required by CORS.
 
 ```javascript
 var spConfig = {
-  allowedOrigins: ['example.com']
+  allowedOrigins: ['http://example.com']
 }
 ```
 
