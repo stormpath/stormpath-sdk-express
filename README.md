@@ -116,7 +116,7 @@ middleware set and pass it to your app:
 var cookieParser = reqiure('cookie-parser');
 var bodyParser = reqiure('body-parser');
 var express = reqiure('express');
-var stormpathExpressSdk = require('stormpath-express-sdk');
+var stormpathExpressSdk = require('stormpath-sdk-express');
 
 var spConfig = {
   appHref: 'YOUR_STORMPATH_APP_HREF',
