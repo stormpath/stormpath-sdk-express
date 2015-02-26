@@ -23,6 +23,8 @@
   "configuration":{
     "DEFAULT_TOKEN_ENDPOINT": "/oauth/token",
     "DEFAULT_LOGOUT_ENDPOINT": "/logout",
-    "DEFAULT_ACCESS_TOKEN_COOKIE_NAME": "access_token"
+    "DEFAULT_ACCESS_TOKEN_COOKIE_NAME": "access_token",
+    "DEFAULT_USER_COLLECTION_ENDPOINT": "/api/users",
+    "DEFAULT_CURRENT_USER_ENDPOINT": "/api/users/current"
   }
 }

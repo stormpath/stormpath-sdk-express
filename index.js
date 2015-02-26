@@ -67,6 +67,13 @@ function createMiddleware(spConfig) {
     return autoRtouer;
   },autoRtouer);
   autoRtouer.getApplication = context.getApplication;
+  autoRtouer.attachDefaults = function(app){
+    app.get(context.spConfig.currentUserEndpoint,context.authenticate.bind(context),context.currentUser.bind(context));
+    app.get(context.spConfig.logoutEndpoint,context.logout.bind(context));
+    app.post(context.spConfig.userCollectionEndpoint,context.register.bind(context));
+    app.post(context.spConfig.tokenEndpoint,context.authenticateForToken.bind(context));
+  };
+
   return autoRtouer;
 }
 
