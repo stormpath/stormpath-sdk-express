@@ -4,13 +4,15 @@
 [![NPM Downloads](http://img.shields.io/npm/dm/stormpath-sdk-express.svg?style=flat)](https://npmjs.org/package/stormpath-sdk-express)
 [![Build Status](https://img.shields.io/travis/stormpath/stormpath-sdk-express.svg?style=flat)](https://travis-ci.org/stormpath/stormpath-sdk-express)
 
-*A simple user authentication library for Express.js.*
+**This module is experimental:** the primary use-case of this module is to
+provide a lean set of Express.js middleware that supports our new
+[Stormpath AngularJS SDK](https://github.com/stormpath/stormpath-angular)
+
+If you are looking for a comprehensive Express.js solution which includes a
+server-side page templating system (but does not include token authentication
+at this time) please visit our [Stormpath-Express] integration.
 
 
-[Stormpath](https://stormpath.com) is a User Management API that reduces
-development time with instant-on, scalable user infrastructure.  Stormpath's
-intuitive API and expert support make it easy for developers to authenticate,
-manage, and secure users and roles in any application.
 
 This library provides middleware for [Express.js] that will allow you to implement
 token authentication strategies in your Express application.  This allows you
@@ -18,18 +20,6 @@ to authenticate an account with [Username and Password authentication] or
 [Api Key Authentication] and return an access token with configurable scope
 and TTL.  This token can be supplied by the client on subsequent requests and
 can be used as an authentication mechanism.
-
-This Beta
-release is focused particularly on token authentication, other Stormpath
-features may be expressed in the future.
-
-If you are building an Angular application you can use [stormpath-angular] with
-this library to create a robust API and Single Page App which leverages Stormpath
-for user data.
-
-If you are looking for a comprehensive web-application solution which includes a
-server-side page templating system (but does not include token authentication
-at this time) please visit our [stormpath-express] integration.
 
 At the moment this library is focusing purely on authentication.  Authorization
 (aka access control) is left in your control.  A common use case with Stormpath
@@ -39,6 +29,12 @@ working with the [`Account`](#Account) object that this library will assign to
 
 If you have feedback about this library, please get in touch and share your
 thoughts! support@stormpath.com
+
+
+[Stormpath](https://stormpath.com) is a User Management API that reduces
+development time with instant-on, scalable user infrastructure.  Stormpath's
+intuitive API and expert support make it easy for developers to authenticate,
+manage, and secure users and roles in any application.
 
 
 
@@ -772,7 +768,7 @@ This project is open-source via the [Apache 2.0 License](http://www.apache.org/l
 [body-parser]: https://github.com/expressjs/body-parser "Body Parser"
 [nJwt]: https://github.com/jwtk/njwt "nJWt"
 [stormpath]: https://stormpath.com "Stormpath"
-[stormpath-angular]: https://github.com/stormpath/stormpath-angular "Stormpath Angular"
+[stormpath-sdk-angular]: https://github.com/stormpath/stormpath-angular "Stormpath AngularJS SDK"
 [stormpath-express]: https://github.com/stormpath/stormpath-express "Stormpath"
 [stormpath-node-sdk]: https://github.com/stormpath/stormpath-sdk-node "Stormpath Node SDK"
 [stormpath-api-key-docs]: http://docs.stormpath.com/guides/api-key-management/ "Stormpath Api Key Management"
