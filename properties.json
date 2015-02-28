@@ -17,7 +17,8 @@
       "XSRF_MISMATCH": "Invalid XSRF token"
     },
     "library":{
-      "SP_APP_UNINITIALIZED": "Stormpath application is not yet initialized"
+      "SP_APP_UNINITIALIZED": "Stormpath application is not yet initialized",
+      "SP_TENANT_UNINITIALIZED": "Stormpath tenant is not yet initialized"
     }
   },
   "configuration":{
@@ -25,6 +26,8 @@
     "DEFAULT_LOGOUT_ENDPOINT": "/logout",
     "DEFAULT_ACCESS_TOKEN_COOKIE_NAME": "access_token",
     "DEFAULT_USER_COLLECTION_ENDPOINT": "/api/users",
-    "DEFAULT_CURRENT_USER_ENDPOINT": "/api/users/current"
+    "DEFAULT_CURRENT_USER_ENDPOINT": "/api/users/current",
+    "RESEND_EMAIL_VERIFICATION_ENDPOINT" : "/api/verificationEmails",
+    "EMAIL_VERIFICATION_TOKEN_COLLECTION_ENDPOINT": "/api/emailVerificationTokens"
   }
 }
