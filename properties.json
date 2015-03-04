@@ -28,6 +28,7 @@
     "DEFAULT_USER_COLLECTION_ENDPOINT": "/api/users",
     "DEFAULT_CURRENT_USER_ENDPOINT": "/api/users/current",
     "RESEND_EMAIL_VERIFICATION_ENDPOINT" : "/api/verificationEmails",
-    "EMAIL_VERIFICATION_TOKEN_COLLECTION_ENDPOINT": "/api/emailVerificationTokens"
+    "EMAIL_VERIFICATION_TOKEN_COLLECTION_ENDPOINT": "/api/emailVerificationTokens",
+    "PASSWORD_RESET_TOKEN_COLLECTION_ENDPOINT": "/api/passwordResetTokens"
   }
 }

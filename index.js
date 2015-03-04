@@ -74,6 +74,8 @@ function createMiddleware(spConfig) {
     app.post(context.spConfig.tokenEndpoint,context.authenticateForToken.bind(context));
     app.post(context.spConfig.resendEmailVerificationEndpoint,context.resendEmailVerification.bind(context));
     app.post(context.spConfig.emailVerificationTokenCollectionEndpoint,context.verifyEmailVerificationToken.bind(context));
+    app.get(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',context.passwordReset.bind(context));
+    app.post(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',context.passwordReset.bind(context));
   };
 
   return autoRtouer;
