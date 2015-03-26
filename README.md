@@ -364,9 +364,9 @@ var spConfig = {
 
     var grantedScope = '';
 
-    // do your logic, then..
+    // do your logic, then callback with an error or the granted scope
 
-    done(grantedScope)
+    done(null,grantedScope)
 
   }
 }
