@@ -10,7 +10,7 @@ provide a lean set of Express.js middleware that supports our new
 
 If you are looking for a comprehensive Express.js solution which includes a
 server-side page templating system (but does not include token authentication
-at this time) please visit our [Stormpath-Express] integration.
+at this time), please visit our [Stormpath-Express] integration.
 
 
 
@@ -21,7 +21,7 @@ to authenticate an account with [Username and Password authentication] or
 and TTL.  This token can be supplied by the client on subsequent requests and
 can be used as an authentication mechanism.
 
-At the moment this library is focusing purely on authentication.  Authorization
+At the moment, this library is focusing purely on authentication.  Authorization
 (aka access control) is left in your control.  A common use case with Stormpath
 is to use Groups as an access control feature.  You can leverage this by
 working with the [`Account`](#Account) object that this library will assign to
@@ -91,8 +91,8 @@ npm install --save stormpath-sdk-express
 ```
 
 The features in this library depend on cookies and POST body
-data.  For that reason you should use [cookie-parser] or [body-parser] or
-any other library which sets `req.cookies` and `req.body`.  If you need
+data.  For that reason, you should use [cookie-parser] or [body-parser] or
+any other library that sets `req.cookies` and `req.body`.  If you need
 to install them:
 
 ```bash
@@ -105,13 +105,13 @@ npm install --save cookie-parser body-parser
 #### <a name="usage-all"></a> Use with all routes
 
 
-To use the library with default options simply require it, create a default
-middleware set and pass it to your app:
+To use the library with default options, simply require it, create a default
+middleware set, and pass it to your app:
 
 ```javascript
-var cookieParser = reqiure('cookie-parser');
-var bodyParser = reqiure('body-parser');
-var express = reqiure('express');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var express = require('express');
 var stormpathExpressSdk = require('stormpath-sdk-express');
 
 var spConfig = {
@@ -133,7 +133,7 @@ Doing this will enable the following functionality:
 
 * All endpoints in your Express application will first be routed through the
 [`authenticate`](#authenticate) middleware, which will assert that the user has
-an existing access token.  If this is not true an error response will be sent.
+an existing access token.  If this is not true, an error response will be sent.
 
 * The endpoint `/oauth/token` will accept Client Password or Client Credential grant
 requests and respond with an access token if authentication is successful.
@@ -150,7 +150,7 @@ all POST requests will validated with an XSRF token as well.
 
 #### <a name="usage-some"></a> Use with some routes
 
-If you dont need to authenticate all routes, but still want to use token
+If you don't need to authenticate all routes, but still want to use token
 authentication, you can break it up like this:
 
 ```javascript
@@ -165,7 +165,7 @@ app.post('/tokens',spMiddleware.authenticateForToken);
 // Enforce authentication on the API
 
 app.get('/api/*',spMiddleware.authenticate,function(req,res,next){
-  // If we get here, the user has been authentiated
+  // If we get here, the user has been authenticated
   // The account object is available at req.user
 });
 
@@ -183,13 +183,13 @@ If you have a more complex use case, we suggest:
 * Using the [`spConfig`](#spConfig) options to control features
 * Custom chaining of specific middleware from the [Middleware API](#middleware-api)
 * Create custom middleware using the [Middleware Factory Methods](#middleware-factory)
-* Creating multiple instances of `spMiddleware`, with different [`spConfig`](#spConfig) options
+* Creating multiple instances of `spMiddleware` with different [`spConfig`](#spConfig) options
 * Using the Router object in Express 4.x to organize your routes
 
 
 ## <a name="spConfig"></a> `spConfig` options
 
-The default beahvior of the middleware can be modified via the `spCpnfig` object
+The default behavior of the middleware can be modified via the `spCpnfig` object
 that you pass to `createMiddleware()`.  This section describes all the
 available options and which middleware functions they affect.
 
@@ -199,7 +199,7 @@ available options and which middleware functions they affect.
 #### <a name="accessTokenTtl"></a> Access Token TTL (seconds)
 
 The default duration of access tokens is one hour.  Use `accessTokenTtl` to
-set a different value, in seconds.  Once the token expires the client
+set a different value in seconds.  Once the token expires, the client
 will need to obtain a new token.
 
 ```javascript
@@ -245,12 +245,12 @@ Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordFo
 
 #### <a name="access-token-response"></a> Access Token Response
 
-By default this library will not send the access token in the
+By default, this library will not send the access token in the
 body of the response if the grant type is `password`.  Instead it will
 write the access token to an HTTPS-only cookie and send 201 for the response status.
 
-This is for security purposes: by exposing it in the body you expose it
-to the javascript environment on the client - which is vulnerable to XSS
+This is for security purposes. By exposing it in the body, you expose it
+to the javascript environment on the client, which is vulnerable to XSS
 attacks.
 
 You can disable this security feature by enabling the access token response writer:
@@ -261,7 +261,7 @@ var spConfig = {
 }
 ```
 
-When enabled the response body will be a [`TokenResponse`](#TokenResponse)
+When enabled, the response body will be a [`TokenResponse`](#TokenResponse)
 
 Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken)
 
@@ -271,7 +271,7 @@ Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordFo
 #### <a name="allowedOrigins"></a> Allowed Origins
 
 This is a whitelist of domains that are allowed to make requests of your API.
-If you are making cross-origin requests (CORS) to your server you will need to
+If you are making cross-origin requests (CORS) to your server, you will need to
 whitelist the origin domains with this option.  This library will automatically
 respond with the relevant response headers that are required by CORS.
 
@@ -285,12 +285,12 @@ Used by `autoRouteHandler` via `app.use(stormpathMiddleware)`
 
 #### <a name="error-handlers"></a> Error Handlers
 
-By default the library will respond to failed authentication by ending the
+By default, the library will respond to failed authentication by ending the
 response and sending an appropriate error code and message.
 
 Set `endOnError` to false to disable this default behaviour.
 
-In this case the library will assign the error to `req.authenticationError`
+In this case, the library will assign the error to `req.authenticationError`
 and continue the middleware chain.
 
 ```javascript
@@ -322,15 +322,15 @@ app.get('/secrets',spMiddleware.authenticate,function(req,res,next){
 #### <a name="forceHttps"></a> HTTPS
 
 This library auto-negotiates HTTP vs HTTPS.  If your server is accepting
-HTTPS requests it will automatically add the `Secure` option to the
+HTTPS requests, it will automatically add the `Secure` option to the
 access token cookie.  This relies on [`req.protocol`][express.req.protocol] from the Express
 framework.
 
-If your server is behind a load balancer you should use the [`"trust proxy"`][trust-proxy-option]
+If your server is behind a load balancer, you should use the [`"trust proxy"`][trust-proxy-option]
 option for Express.
 
-If you cannot trust that your forward proxy is doing the right thing then you
-should force this library to always use HTTPS
+If you cannot trust that your forward proxy is doing the right thing, then you
+should force this library to always use HTTPS.
 
 **Example: force HTTPS always**
 
@@ -343,13 +343,12 @@ Used by [`writeToken`](#writeToken)
 
 #### <a name="scopeFactory"></a> Scope Factory
 
-By default the library will not add scope to access tokens, we leave this
-in your control.
-Implement a scope factory if you wish to respond to requested scope by granting
+By default, the library will not add scope to access tokens, we leave this
+in your control. Implement a scope factory if you wish to respond to a requested scope by granting
 specific scopes.  It will be called before the access token
 is written.  You MUST call the done callback with the granted scope.  If
 your logic determines that no scope should be given, simply call back
-with a false-ey value.
+with a falsey value.
 
 If you need more control over the token creation, see
 [Custom Token Strategies](#custom-token-strategies)
@@ -360,7 +359,7 @@ var spConfig = {
   // ...
   scopeFactory: function(req,res,authenticationResult,account,requestedScope,done){
 
-    // requestedScope is a string - passed in from the request
+    // requestedScope is a string passed in from the request
 
     var grantedScope = '';
 
@@ -398,7 +397,7 @@ within the access token.  Doing this allows the library to do a stateless
 check when validating XSRF tokens.
 
 Your client application, for any POST request, should supply the XSRF token
-via the `X-XSRF-TOKEN: <token>` HTTP Header.  If you are using Angular.js this
+via the `X-XSRF-TOKEN: <token>` HTTP Header.  If you are using Angular.js, this
 will happen for you automatically.
 
 If you do not want to issue or validate XSRF tokens, disable the feature:
@@ -415,14 +414,14 @@ var spConfig = {
 ## <a name="custom-token-strategies"></a> Custom Token Strategies
 
 This library will issue JWT access tokens with a configurable TTL and scope.
-All other values (`sub`, `iat`, etc) are set automatically and
+All other values (`sub`, `iat`, etc.) are set automatically and
 used for verifying the integrity of the token during authentication.
 
-If you want to implement your own token responder (not recommended!) you can
+If you want to implement your own token responder (not recommended!), you can
 do so by setting the `{ writeTokens: false }` option in [`spConfig`](#spConfig)
 
 Doing this will prevent the library from automatically generating tokens and sending
-them in responses.  Instead it will provide an [`AuthenticationRequest`](#AuthenticationRequest)
+them in responses.  Instead, it will provide an [`AuthenticationRequest`](#AuthenticationRequest)
 object at `req.authenticationRequest` and call `next()`. It is
 up to you to generate a token and end the response.
 
@@ -435,16 +434,16 @@ validation of XSRF tokens.
 This section is a list of of middleware functions that are available
 on the object that is returned by `createMiddleware(spConfig)`
 
-When you call `createMiddleware(spConfig)` you are simply creating a set
+When you call `createMiddleware(spConfig)`, you are simply creating a set
 of middleware functions which are pre-bound to the Stormpath Application that
 you define with the `spConfig` options.  You can then mix-and-match these
-middleware functions to create authentication logic which suits your
+middleware functions to create authentication logic that suits your
 application.
 
 **WARNING**: We have put a lot of thought into the default decisions of this
-library.  While we provide this API for developer use it is required that
+library.  While we provide this API for developer use, it is required that
 you understand the security trade-offs that you may be making by customizing
-this library.  If you need any assistance please contact support@stormpath.com
+this library.  If you need any assistance, please contact support@stormpath.com.
 
 ### <a name="authenticate"></a> authenticate
 
@@ -474,9 +473,9 @@ Looks for an access token in the request cookies.
 If authenticated, assigns an [`Account`](#Account) to `req.user` and provides
 the unpacked access token at `req.accessToken` (an instance of [`Jwt`](#Jwt))
 
-If an error is encountered it ends the response with an error.  If
-using the option `{ endOnError: false}` it sets
-`req.authenticationError` and continues the chain
+If an error is encountered, it ends the response with an error.  If
+using the option `{ endOnError: false}`, it sets
+`req.authenticationError` and continues the chain.
 
 **Example: use cookie authentication for a specific endpoint**
 ````javascript
@@ -488,7 +487,7 @@ app.get('/something',spMiddleware.authenticateCookie,function(req,res,next){
   res.json({
     message: 'Hello, ' + req.user.fullName + ', ' +
       'you have a valid access token in a cookie. ' +
-      'Your token exires in: ' + req.accessToken.body.exp
+      'Your token expires in: ' + req.accessToken.body.exp
     });
 });
 ````
@@ -504,9 +503,9 @@ on the request
 If authenticated, assigns an [`Account`](#Account) to `req.user` and provides
 the unpacked access token at `req.accessToken` (an instance of [`Jwt`](#Jwt))
 
-If an error is encountered it ends the response with an error.  If
-using the option `{ endOnError: false}` it sets
-`req.authenticationError` and continues the chain
+If an error is encountered, it ends the response with an error.  If
+using the option `{ endOnError: false}`, it sets
+`req.authenticationError` and continues the chain.
 
 **Example: use bearer authentication for a specific endpoint**
 ````javascript
@@ -519,7 +518,7 @@ app.get('/something',spMiddleware.authenticateCookie,function(req,res,next){
   res.json({
     message: 'Hello, ' + req.user.fullName + ', ' +
       'you have a valid access token in your Authorization header. ' +
-      'Your token exires in: ' + req.accessToken.body.exp
+      'Your token expires in: ' + req.accessToken.body.exp
     });
 });
 ````
@@ -557,7 +556,7 @@ app.post('/oauth/token',spMiddleware.authenticateApiKeyForToken);
 
 ### <a name="authenticateUsernamePasswordForToken"></a> authenticateUsernamePasswordForToken
 
-Expects a JSON POST body which has a `username` and `password` field, and a
+Expects a JSON POST body, which has a `username` and `password` field, and a
 grant type request of `password`.
 
 **Example: posting username and password to the token endpoint**
@@ -601,8 +600,7 @@ var app = express();
 
 app.post('/tokens-r-us',spMiddleware.authenticateForToken);
 ````
-Note: this example can also be accomplished with the `tokenEndpoint` option in
-`spConfig`
+Note: this example can also be accomplished with the `tokenEndpoint` option in`spConfig`.
 
 
 
@@ -624,14 +622,14 @@ var app = express();
 
 app.post('/tokens-r-us',spMiddleware.writeToken);
 ````
-Note: example can also be accomplished with the `tokenEndpoint` option in `spConfig`
+Note: example can also be accomplished with the `tokenEndpoint` option in `spConfig`.
 
 
 
 
 #### <a name="logout"></a> logout
 
-This method will delete the XSRF and access token cookies on the client
+This method will delete the XSRF and access token cookies on the client.
 
 **Example: manually defining a logout endpoint**
 ````
@@ -647,16 +645,16 @@ app.get('/logout',spMiddleware.logout);
 
 ## <a name="middleware-factory"></a> Middleware Factory Methods
 
-If you only need certain features or middleware functions you can construct
+If you only need certain features or middleware functions, you can construct
 the middleware functions manually.  All middleware functions can be constructed
 by calling their constructor directly off the library export.  Simply
-use a capital letter to access the constructor.  When calling the constructor
-you must provide an `spConfig` object with relevent options.
+use a capital letter to access the constructor.  When calling the constructor,
+you must provide an `spConfig` object with relevant options.
 
 **WARNING**: We have put a lot of thought into the default decisions of this
-library.  While we provide this API for developer use it is required that
+library.  While we provide this API for developer use, it is required that
 you understand the security trade-offs that you may be making but customizing
-this library.  If you need any assistance please contact support@stormpath.com
+this library.  If you need any assistance, please contact support@stormpath.com
 
 For example: say you want one web service to issue access tokens for API
 Authentication.  You then want all your other web services to read
@@ -696,7 +694,7 @@ var authenticate = stormpathSdkExpress.Authenticate(spConfig);
 var app = express();
 
 app.use('/api/*',authenticate,function(req,res,next){
-  // handle api request.  account will be available at req.user
+  // handle api request.  Account will be available at req.user
 });
 ```
 
@@ -704,7 +702,7 @@ app.use('/api/*',authenticate,function(req,res,next){
 
 ## <a name="types"></a> Types
 
-These are the object types that you will  find in this library.
+These are the object types that you will find in this library.
 
 ### <a name="Account"></a> Account
 
@@ -715,15 +713,15 @@ http://docs.stormpath.com/nodejs/api/account
 
 ### <a name="AuthenticationRequest"></a> AuthenticationRequest
 
-This object is provided by the underlying [Stormpath Node SDK][stormpath-node-sdk],
-it is documented here:
+This object is provided by the underlying [Stormpath Node SDK][stormpath-node-sdk].
+It is documented here:
 
 http://docs.stormpath.com/nodejs/api/authenticationResult
 
 ### <a name="Jwt"></a> Jwt
 
-These are objects which represent a JWT token.  They have methods for manipulating
-the token and compacting it to an encoded string.  These instaces are provided by
+These are objects that represent a JWT token.  They have methods for manipulating
+the token and compacting it to an encoded string.  These instances are provided by
 the [nJwt Library][nJwt].
 
 ### <a name="TokenResponse"></a> TokenResponse
