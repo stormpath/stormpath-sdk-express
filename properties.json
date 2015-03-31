@@ -18,7 +18,8 @@
     },
     "library":{
       "SP_APP_UNINITIALIZED": "Stormpath application is not yet initialized",
-      "SP_TENANT_UNINITIALIZED": "Stormpath tenant is not yet initialized"
+      "SP_TENANT_UNINITIALIZED": "Stormpath tenant is not yet initialized",
+      "NODE_SDK_ERROR": "Unknown error from Node SDK"
     }
   },
   "configuration":{
