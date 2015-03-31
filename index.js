@@ -1,8 +1,15 @@
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
 var url = require('url');
 
 var MiddlewareContext = require('./lib/MiddlewareContext');
+
+/*
+  middlewareFns is a map of all the exported functions that
+  exist as files in the middlware/ folder
+*/
 
 var middlewareFns = fs.readdirSync(path.join(__dirname,'lib','middleware'))
 .filter(function(filename){
@@ -44,6 +51,12 @@ function createMiddleware(spConfig) {
   var context = new MiddlewareContext(spConfig);
   var boundMiddleware = {};
 
+  /*
+    For each exported middleware function, create a bound version
+    which is bound to the context and assign a reference onto
+    the context which points to the bound function.  The name
+    of the function is the name of the reference.
+   */
 
   Object.keys(middlewareFns).reduce(function(boundMiddleware,fnName){
     var boundFn = middlewareFns[fnName].bind(context);
