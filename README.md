@@ -4,30 +4,36 @@
 [![NPM Downloads](http://img.shields.io/npm/dm/stormpath-sdk-express.svg?style=flat)](https://npmjs.org/package/stormpath-sdk-express)
 [![Build Status](https://img.shields.io/travis/stormpath/stormpath-sdk-express.svg?style=flat)](https://travis-ci.org/stormpath/stormpath-sdk-express)
 
-**This module is experimental:** the primary use-case of this module is to
+## This module is BETA
+
+The primary use-case of this module is to
 provide a lean set of Express.js middleware that supports our new
 [Stormpath AngularJS SDK](https://github.com/stormpath/stormpath-angular)
 
+This module does not provide any built-in views or Angular code, it is meant
+to be a back-end authentication and authorization API for a Single-Page Application.  If you are
+starting a project from scratch and would like some guidance with creating
+an AngularJS application, please see our
+[Stormpath AngularJS Guide](http://docs.stormpath.com/angularjs/guide/index.html)
+
 If you are looking for a comprehensive Express.js solution which includes a
-server-side page templating system (but does not include token authentication
-at this time), please visit our [Stormpath-Express] integration.
+server-side page templating system, please visit our [Stormpath-Express]
+integration.  Note: we do not yet have an integration strategy for using
+AngularJS with [Stormpath-Express].
 
+**The following features are supported by this module:**
 
+* Register new accounts
+* Login users via username & password, Oauth Bearer Token, or Basic Auth
+* Email verification workflow
+* Password Reset Workflow
 
-This library provides middleware for [Express.js] that will allow you to implement
-token authentication strategies in your Express application.  This allows you
-to authenticate an account with [Username and Password authentication] or
-[Api Key Authentication] and return an access token with configurable scope
-and TTL.  This token can be supplied by the client on subsequent requests and
-can be used as an authentication mechanism.
+**These features are NOT yet supported (but coming soon!):**
 
-At the moment, this library is focusing purely on authentication.  Authorization
-(aka access control) is left in your control.  A common use case with Stormpath
-is to use Groups as an access control feature.  You can leverage this by
-working with the [`Account`](#Account) object that this library will assign to
-`req.user`
+* Social login
+* ID Site Integration
 
-If you have feedback about this library, please get in touch and share your
+If you have questions or feedback about this library, please get in touch and share your
 thoughts! support@stormpath.com
 
 
@@ -36,7 +42,11 @@ development time with instant-on, scalable user infrastructure.  Stormpath's
 intuitive API and expert support make it easy for developers to authenticate,
 manage, and secure users and roles in any application.
 
+## Example Integration
 
+You can see an example integration in the
+[Dashboard App Example](https://github.com/stormpath/stormpath-sdk-angularjs/tree/master/example/dashboard-app)
+application, which is part of our [Stormpath AngularJS SDK](https://github.com/stormpath/stormpath-angular)
 
 
 ## Table of Contents
