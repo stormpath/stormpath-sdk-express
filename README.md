@@ -64,10 +64,12 @@ manage, and secure users and roles in any application.
 * [Middleware API](#middleware-api)
  * [authenticate](#authenticate)
  * [authenticateApiKeyForToken](#authenticateApiKeyForToken)
+ * [authenticateBasicAuth](#authenticateBasicAuth)
  * [authenticateBearerAuthorizationHeader](#authenticateBearerAuthorizationHeader)
  * [authenticateCookie](#authenticateCookie)
  * [authenticateForToken](#authenticateForToken)
  * [authenticateUsernamePasswordForToken](#authenticateUsernamePasswordForToken)
+ * [groupsRequired](#groupsRequired)
  * [logout](#logout)
  * [writeToken](#writeToken)
 
@@ -449,7 +451,9 @@ this library.  If you need any assistance, please contact support@stormpath.com.
 
 This is a convenience middleware that will inspect the request and call
 [`authenticateCookie`](#authenticateCookie) or
-[`authenticateBearerAuthorizationHeader`](#authenticateBearerAuthorizationHeader) for you
+[`authenticateBearerAuthorizationHeader`](#authenticateBearerAuthorizationHeader) or
+[`authenticateBasicAuth`](#authenticateBasicAuth)
+for you
 
 **Example usage: authenticate specific routes**
 
@@ -487,6 +491,36 @@ app.get('/something',spMiddleware.authenticateCookie,function(req,res,next){
   res.json({
     message: 'Hello, ' + req.user.fullName + ', ' +
       'you have a valid access token in a cookie. ' +
+      'Your token expires in: ' + req.accessToken.body.exp
+    });
+});
+````
+
+
+
+### <a name="authenticateBasicAuth"></a> authenticateBasicAuth
+
+Looks for an access token in the `Authorization: Basic <Base64(apiKeyId:apiKeySecret)>` header
+on the request
+
+If authenticated, assigns an [`Account`](#Account) to `req.user` and provides
+the unpacked access token at `req.accessToken` (an instance of [`Jwt`](#Jwt))
+
+If an error is encountered, it ends the response with an error.  If
+using the option `{ endOnError: false}`, it sets
+`req.authenticationError` and continues the chain.
+
+**Example: use Basic Authentication for a specific endpoint**
+````javascript
+var spMiddleware = stormpathExpressSdk.createMiddleware({/* options */})
+var app = express();
+
+app.use(spMiddleware)
+
+app.get('/something',spMiddleware.authenticateBasicAuth,function(req,res,next){
+  res.json({
+    message: 'Hello, ' + req.user.fullName + ', ' +
+      'you have a valid API Keu in your Basic Authorization header. ' +
       'Your token expires in: ' + req.accessToken.body.exp
     });
 });
@@ -599,6 +633,26 @@ var spMiddleware = stormpathExpressSdk.createMiddleware({/* options */})
 var app = express();
 
 app.post('/tokens-r-us',spMiddleware.authenticateForToken);
+````
+Note: this example can also be accomplished with the `tokenEndpoint` option in`spConfig`.
+
+
+
+#### <a name="groupsRequired"></a> groupsRequired
+
+This middleware allows you to perform group-based authorization.  It takes
+a string or array of strings.  If an array, the user must exist in all said
+groups.
+
+**Example: manually defining the token endpoint**
+````javascript
+var spMiddleware = stormpathExpressSdk.createMiddleware({/* options */})
+
+var app = express();
+
+app.get('/secrets',spMiddleware.groupsRequired('admin'));
+
+app.get('/not-so-secrets',spMiddleware.groupsRequired(['admin','editor']));
 ````
 Note: this example can also be accomplished with the `tokenEndpoint` option in`spConfig`.
 
