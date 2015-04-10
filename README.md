@@ -530,7 +530,7 @@ app.use(spMiddleware)
 app.get('/something',spMiddleware.authenticateBasicAuth,function(req,res,next){
   res.json({
     message: 'Hello, ' + req.user.fullName + ', ' +
-      'you have a valid API Keu in your Basic Authorization header. ' +
+      'you have a valid API Key in your Basic Authorization header. ' +
       'Your token expires in: ' + req.accessToken.body.exp
     });
 });
@@ -541,7 +541,7 @@ app.get('/something',spMiddleware.authenticateBasicAuth,function(req,res,next){
 
 ### <a name="authenticateBearerAuthorizationHeader"></a> authenticateBearerAuthorizationHeader
 
-Looks for an access token in the `Authorization: Bearer <Base64(accesToken)>` header
+Looks for an access token in the `Authorization: Bearer <Base64(accessToken)>` header
 on the request
 
 If authenticated, assigns an [`Account`](#Account) to `req.user` and provides
@@ -558,7 +558,7 @@ var app = express();
 
 app.use(spMiddleware)
 
-app.get('/something',spMiddleware.authenticateCookie,function(req,res,next){
+app.get('/something',spMiddleware.authenticateBearerAuthorizationHeader,function(req,res,next){
   res.json({
     message: 'Hello, ' + req.user.fullName + ', ' +
       'you have a valid access token in your Authorization header. ' +
