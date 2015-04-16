@@ -580,7 +580,7 @@ Basic scheme.
 **Example: posting api key ID and secret to the token endpoint**
 ```
 POST /oauth/tokens?grant_type=client_credentials
-Authoriation: Basic <Base64(apiKeyId:apiKeySecret)>
+Authorization: Basic <Base64(apiKeyId:apiKeySecret)>
 ```
 
 If the supplied credentials are a valid API Key for an account, this function will respond
