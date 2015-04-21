@@ -53,9 +53,7 @@ describe('the user agent of this library',function(){
       appHref = 'http://0.0.0.0:'+mockApiServer.address().port+'/an-application';
       app = express();
       app.use(stormpathSdkExpress.createMiddleware({
-        appHref: appHref,
-        apiKeyId: '123',
-        apiKeySecret: '123'
+        appHref: appHref
       }));
     });
 
@@ -84,7 +82,14 @@ describe('default middleware from createMiddleware() with default options',funct
     stormpath: {
       // Mock out the stormpath library, we don't need to get a client
       // or api key for this test
-      Client: function(){return {getApplication:function(){}};},
+      Client: function(){return {
+        getApplication:function(){
+
+        },
+        getCurrentTenant: function(cb){
+          cb(null,undefined);
+        }};
+      },
       ApiKey: function(){},
     }
   };

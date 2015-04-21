@@ -139,9 +139,12 @@ describe('authenticateForToken',function() {
           .expect('set-cookie', httpsOnlyCookieExpr)
           .expect(201,'')
           .end(function(err,res) {
-            // first cookie is xsrf token, second cookie is the access token
+            if(err){
+              throw err;
+            }
             var access_token = res.headers['set-cookie'][1].match(/access_token=([^;]+)/)[1];
             parser.parseClaimsJws(access_token,function(err,jwt) {
+              assert.equal(err,null);
               assert.equal(jwt.body.jti.length,36,'is a uuid');
               assert.equal(jwt.body.iss,apiAuthFixture.appHref,'Was issued by the application');
               assert.equal(jwt.body.sub,loginAuthFixture.accountHref,'subject is the account');
@@ -160,7 +163,10 @@ describe('authenticateForToken',function() {
             username:loginAuthFixture.accountUsername,
             password: 'not the right password'
           })
-          .expect(401,{errorMessage:'Invalid username or password.'},done);
+          .expect(401,{
+            code: 7100,
+            errorMessage:'Invalid username or password.'
+          },done);
       });
     });
   });

@@ -18,8 +18,6 @@ describe('writeTokens option',function() {
       loginSuccessFixture(function(fixture){
         accountHref = fixture.accountHref;
         var spMiddleware = require('../').createMiddleware({
-          apiKeyId: '123',
-          apiKeySecret: '123',
           appHref: fixture.appHref,
           writeTokens: false
         });
@@ -53,8 +51,6 @@ describe('writeTokens option',function() {
     before(function(done){
       loginSuccessFixture(function(fixture){
         var spMiddleware = require('../').createMiddleware({
-          apiKeyId: '123',
-          apiKeySecret: '123',
           appHref: fixture.appHref
         });
         app = express();

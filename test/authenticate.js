@@ -23,8 +23,6 @@ describe('authenticate middleware',function() {
         app.use(bodyParser.json());
         app.use(cookieParser());
         app.use(require('../').createMiddleware({
-          apiKeyId: '123',
-          apiKeySecret: '123',
           appHref: fixture.appHref
         }));
         app.post(protectedEndpoint,function(req,res){
@@ -85,8 +83,6 @@ describe('authenticate middleware',function() {
         app.use(bodyParser.json());
         app.use(cookieParser());
         app.use(require('../').createMiddleware({
-          apiKeyId: '123',
-          apiKeySecret: '123',
           appHref: fixture.appHref,
           xsrf: false
         }));
