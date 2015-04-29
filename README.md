@@ -63,6 +63,7 @@ application, which is part of our [Stormpath AngularJS SDK](https://github.com/s
   * [allowedOrigins](#allowedOrigins)
   * [endOnError](#error-handlers)
   * [forceHttps](#forceHttps)
+  * [postRegistrationHandler](#postRegistrationHandler)
   * [scopeFactory](#scopeFactory)
   * [tokenEndpoint](#tokenEndpoint)
   * [writeAccessTokenToCookie](#access-token-cookie)
@@ -352,6 +353,50 @@ var spConfig = {
 }
 ```
 Used by [`writeToken`](#writeToken)
+
+
+
+#### <a name="postRegistrationHandler"></a> Post Registration Handler
+
+Use this handler to receive account objects that have been created. This handler
+is called after a POST to `/register` has resulted in a new account. You must
+end the response manually, or call `next()` to allow the default
+responder to finish the response.
+
+The newly created user is available at `req.user`.
+
+**Example: Add some custom data after registration**
+
+```javascript
+var spConfig = {
+  postRegistrationHandler: function(req,res,next){
+    req.user.getCustomData(function(err,customData){
+      if(err){
+        res.end(err)
+      }else{
+        customData.myCustomValue = 'foo';
+        customData.save(function(err){
+          if(err){
+            res.end(err)
+          }else{
+            next();
+          }
+        })
+      }
+    });
+  }
+}
+```
+
+**Example: Send a custom registration response**
+
+```javascript
+var spConfig = {
+  postRegistrationHandler: function(req,res,next){
+    res.end("Thank you for registering");
+  }
+}
+```
 
 #### <a name="scopeFactory"></a> Scope Factory
 
