@@ -110,7 +110,7 @@ describe('authenticateUsernamePasswordForToken',function() {
           });
           app = express();
           app.use(bodyParser.json());
-          app.use(spMiddleware);
+          spMiddleware.attachDefaults(app);
 
           pem.createCertificate({days:1, selfSigned:true}, function(err, keys){
             server = https.createServer({key: keys.serviceKey, cert: keys.certificate}, app).listen(0);
@@ -199,7 +199,7 @@ describe('authenticateUsernamePasswordForToken',function() {
           });
           app = express();
           app.use(bodyParser.json());
-          app.use(spMiddleware);
+          spMiddleware.attachDefaults(app);
           var wait = setInterval(function(){
             /* wait for sp application */
             if(spMiddleware.getApplication()){
@@ -240,7 +240,7 @@ describe('authenticateUsernamePasswordForToken',function() {
           });
           app = express();
           app.use(bodyParser.json());
-          app.use(spMiddleware);
+          spMiddleware.attachDefaults(app);
 
           var wait = setInterval(function(){
             /* wait for sp application */
@@ -287,7 +287,7 @@ describe('authenticateUsernamePasswordForToken',function() {
             }
           });
           app.use(bodyParser.json());
-          app.use(spMiddleware);
+          spMiddleware.attachDefaults(app);
 
           pem.createCertificate({days:1, selfSigned:true}, function(err, keys){
             server = https.createServer({key: keys.serviceKey, cert: keys.certificate}, app).listen(0);
@@ -353,7 +353,7 @@ describe('authenticateUsernamePasswordForToken',function() {
           });
           app = express();
           app.use(bodyParser.json());
-          app.use(spMiddleware);
+          spMiddleware.attachDefaults(app);
           var wait = setInterval(function(){
             /* wait for sp application */
             if(spMiddleware.getApplication()){
@@ -401,7 +401,7 @@ describe('authenticateUsernamePasswordForToken',function() {
           });
           app = express();
           app.use(bodyParser.json());
-          app.use(spMiddleware);
+          spMiddleware.attachDefaults(app);
           var wait = setInterval(function(){
             /* wait for sp application */
             if(spMiddleware.getApplication()){

@@ -30,7 +30,8 @@ describe('authenticateBearerAuthorizationHeader',function() {
     });
     app = express();
     app.use(bodyParser.json());
-    app.use(spMiddleware);
+    spMiddleware.attachDefaults(app);
+    app.use(spMiddleware.authenticate);
     app.post(protectedEndpoint,function(req,res){
       res.json({ data: req.body, user: req.user });
     });
@@ -102,8 +103,8 @@ describe('authenticateBearerAuthorizationHeader',function() {
       });
       app = express();
       app.use(bodyParser.json());
-      app.use(spMiddleware);
-      app.post(protectedEndpoint,function(req,res){
+      spMiddleware.attachDefaults(app);
+      app.post(protectedEndpoint,spMiddleware.authenticate,function(req,res){
         res.json({ data: req.body, user: req.user });
       });
 
