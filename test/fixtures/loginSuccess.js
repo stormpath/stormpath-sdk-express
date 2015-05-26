@@ -40,7 +40,10 @@ function loginSuccessFixture(base,expressApp) {
   });
 
   expressApp.get(accountUri,function(req,res){
-    res.json({href:accountHref });
+    res.json({
+      href:accountHref,
+      status: "ENABLED"
+    });
   });
 
   expressApp.post(loginAttemptsUri,function(req,res){

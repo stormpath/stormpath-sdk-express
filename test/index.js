@@ -53,9 +53,7 @@ describe('the user agent of this library',function(){
       appHref = 'http://0.0.0.0:'+mockApiServer.address().port+'/an-application';
       app = express();
       app.use(stormpathSdkExpress.createMiddleware({
-        appHref: appHref,
-        apiKeyId: '123',
-        apiKeySecret: '123'
+        appHref: appHref
       }));
     });
 
@@ -74,6 +72,45 @@ describe('the user agent of this library',function(){
   });
 });
 
+describe('createMiddleware',function(){
+
+  var a,b,c;
+  before(function(){
+    a = process.env.STORMPATH_API_KEY_SECRET;
+    b = process.env.STORMPATH_API_KEY_ID;
+    c = process.env.STORMPATH_APP_HREF;
+    delete process.env.STORMPATH_API_KEY_SECRET;
+    delete process.env.STORMPATH_API_KEY_ID;
+    delete process.env.STORMPATH_APP_HREF;
+  });
+  after(function(){
+    process.env.STORMPATH_API_KEY_SECRET = a;
+    process.env.STORMPATH_API_KEY_ID = b;
+    process.env.STORMPATH_APP_HREF = c;
+  });
+  it('should throw if an api key ID is not given',function(){
+    assert.throws(function(){
+      stormpathSdkExpress.createMiddleware({});
+    },properties.errors.MISSING_API_KEY_ID);
+  });
+  it('should throw if an api key secret is not given',function(){
+    assert.throws(function(){
+      stormpathSdkExpress.createMiddleware({
+        apiKeyId: '1'
+      });
+    },properties.errors.MISSING_API_KEY_SECRET);
+  });
+  it('should throw if an app href is not given',function(){
+    assert.throws(function(){
+      stormpathSdkExpress.createMiddleware({
+        apiKeyId: '1',
+        apiKeySecret: '1'
+      });
+    },properties.errors.MISSING_APP_HREF);
+  });
+});
+
+
 describe('default middleware from createMiddleware() with default options',function(){
   var stormpathMiddleware, app;
 
@@ -84,7 +121,14 @@ describe('default middleware from createMiddleware() with default options',funct
     stormpath: {
       // Mock out the stormpath library, we don't need to get a client
       // or api key for this test
-      Client: function(){return {getApplication:function(){}};},
+      Client: function(){return {
+        getApplication:function(){
+
+        },
+        getCurrentTenant: function(cb){
+          cb(null,undefined);
+        }};
+      },
       ApiKey: function(){},
     }
   };

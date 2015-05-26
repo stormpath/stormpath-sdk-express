@@ -26,6 +26,9 @@ describe('authenticateUsernamePasswordForToken',function() {
       spClient: {
         getApplication: function(href,cb){
           cb(null,undefined);
+        },
+        getCurrentTenant: function(cb){
+          cb(null,undefined);
         }
       }
     };
@@ -52,6 +55,9 @@ describe('authenticateUsernamePasswordForToken',function() {
       spClient: {
         getApplication: function(href,cb){
           cb(null,{});
+        },
+        getCurrentTenant: function(cb){
+          cb(null,undefined);
         }
       }
     };
@@ -95,9 +101,9 @@ describe('authenticateUsernamePasswordForToken',function() {
       before(function(done){
         loginSuccessFixture(function(fixture){
           var spMiddleware = stormpathSdkExpress.createMiddleware({
+            appHref: fixture.appHref,
             apiKeyId: '123',
             apiKeySecret: '123',
-            appHref: fixture.appHref,
             scopeFactory: function(req,res,authenticationResult,account,requestedScope,done) {
               done(null,requestedScope ? requestedScopeReflection(customScope,customRequestedScope) : '');
             }
@@ -189,8 +195,6 @@ describe('authenticateUsernamePasswordForToken',function() {
       before(function(done){
         loginSuccessFixture(function(fixture){
           var spMiddleware = stormpathSdkExpress.createMiddleware({
-            apiKeyId: '123',
-            apiKeySecret: '123',
             appHref: fixture.appHref
           });
           app = express();
@@ -231,8 +235,6 @@ describe('authenticateUsernamePasswordForToken',function() {
       before(function(done){
         loginSuccessFixture(function(fixture){
           var spMiddleware = stormpathSdkExpress.createMiddleware({
-            apiKeyId: '123',
-            apiKeySecret: '123',
             appHref: fixture.appHref,
             forceHttps: true
           });
@@ -276,9 +278,9 @@ describe('authenticateUsernamePasswordForToken',function() {
         loginSuccessFixture(function(fixture){
           app = express();
           var spMiddleware = stormpathSdkExpress.createMiddleware({
+            appHref: fixture.appHref,
             apiKeyId: '123',
             apiKeySecret: '123',
-            appHref: fixture.appHref,
             writeAccessTokenResponse: true,
             scopeFactory: function(req,res,authenticationResult,account,requstedScope,done) {
               done(null,customScope);
@@ -345,8 +347,6 @@ describe('authenticateUsernamePasswordForToken',function() {
       before(function(done){
         loginSuccessFixture(function(fixture){
           var spMiddleware = stormpathSdkExpress.createMiddleware({
-            apiKeyId: '123',
-            apiKeySecret: '123',
             appHref: fixture.appHref,
             writeAccessTokenResponse: true,
             writeAccessTokenToCookie: false
@@ -396,8 +396,6 @@ describe('authenticateUsernamePasswordForToken',function() {
       before(function(done){
         loginSuccessFixture(function(fixture){
           var spMiddleware = stormpathSdkExpress.createMiddleware({
-            apiKeyId: '123',
-            apiKeySecret: '123',
             appHref: fixture.appHref,
             writeAccessTokenToCookie: false
           });

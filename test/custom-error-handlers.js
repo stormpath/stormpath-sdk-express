@@ -12,8 +12,6 @@ describe('endOnError option',function() {
     before(function(done){
       loginSuccessFixture(function(fixture){
         var spMiddleware = require('../').createMiddleware({
-          apiKeyId: '123',
-          apiKeySecret: '123',
           appHref: fixture.appHref,
           endOnError: false
         });
@@ -44,8 +42,6 @@ describe('endOnError option',function() {
     before(function(done){
       loginSuccessFixture(function(fixture){
         var spMiddleware = require('../').createMiddleware({
-          apiKeyId: '123',
-          apiKeySecret: '123',
           appHref: fixture.appHref
         });
         app = express();
