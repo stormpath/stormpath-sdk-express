@@ -17,8 +17,8 @@ describe('endOnError option',function() {
         });
         app = express();
         app.use(bodyParser.json());
-        app.use(spMiddleware);
-        app.get(protectedUri,function(req,res){
+        spMiddleware.attachDefaults(app);
+        app.get(protectedUri,spMiddleware.authenticate,function(req,res){
           res.json({authenticationError:req.authenticationError.userMessage});
         });
         var wait = setInterval(function(){
@@ -46,7 +46,7 @@ describe('endOnError option',function() {
         });
         app = express();
         app.use(bodyParser.json());
-        app.use(spMiddleware);
+        app.use(spMiddleware.authenticate);
         var wait = setInterval(function(){
           /* wait for sp application */
           if(spMiddleware.getApplication()){

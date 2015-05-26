@@ -22,10 +22,11 @@ describe('authenticate middleware',function() {
         app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
-        app.use(require('../').createMiddleware({
+        var spMiddleware = require('../').createMiddleware({
           appHref: fixture.appHref
-        }));
-        app.post(protectedEndpoint,function(req,res){
+        });
+        spMiddleware.attachDefaults(app);
+        app.post(protectedEndpoint,spMiddleware.authenticate,function(req,res){
           res.json(req.body);
         });
         setTimeout(function(){
@@ -82,11 +83,12 @@ describe('authenticate middleware',function() {
         app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
-        app.use(require('../').createMiddleware({
+        var spMiddleware = require('../').createMiddleware({
           appHref: fixture.appHref,
           xsrf: false
-        }));
-        app.post(protectedEndpoint,function(req,res){
+        });
+        spMiddleware.attachDefaults(app);
+        app.post(protectedEndpoint,spMiddleware.authenticate,function(req,res){
           res.json(req.body);
         });
         setTimeout(function(){

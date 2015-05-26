@@ -33,7 +33,8 @@ describe('authenticateForToken',function() {
     });
     app = express();
     app.use(bodyParser.json());
-    app.use(spMiddleware);
+
+    spMiddleware.attachDefaults(app);
 
 
     pem.createCertificate({days:1, selfSigned:true}, function(err, keys){

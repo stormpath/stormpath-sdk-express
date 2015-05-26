@@ -118,9 +118,15 @@ npm install --save cookie-parser body-parser
 #### <a name="usage-all"></a> Use with all routes
 
 
-To use the library with default options, simply require it, create a default
-middleware set, and pass it to your app:
+To use the library with default options, you will do the follwing:
 
+* Require the module
+* Create an instance of `spMiddlware`
+* Attach the default routes
+* Use the [`authenticate`](#authenticate) middleware on all your
+routes, via `app.use()`
+
+**Basic Usage Example:**
 ```javascript
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -133,13 +139,16 @@ var spConfig = {
   apiKeySecret: 'YOUR_STORMPATH_API_KEY_SECRET'
 }
 
-var spMiddleware = stormpathExpressSdk.createMiddleware(spConfig);
-
 var app = express();
 
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(spMiddleware);
+
+var spMiddleware = stormpathExpressSdk.createMiddleware(spConfig);
+
+spMiddleware.attachDefaults(app);
+
+app.use(spMiddleware.authenticate);
 ```
 
 Doing this will enable the following functionality:
@@ -164,28 +173,17 @@ all POST requests will validated with an XSRF token as well.
 #### <a name="usage-some"></a> Use with some routes
 
 If you don't need to authenticate all routes, but still want to use token
-authentication, you can break it up like this:
+authentication, then don't use the statement `app.use(spMiddleware.authenticate)`.
+Instead, use the [`authenticate`](#authenticate) middleware on the
+routes that need authentication:
 
+**Specific Route Example:**
 ```javascript
-var spMiddleware = stormpathExpressSdk.createMiddleware(spConfig);
-
-var app = express();
-
-// Manually define the credential exchange endpoint
-
-app.post('/tokens',spMiddleware.authenticateForToken);
-
 // Enforce authentication on the API
 
 app.get('/api/*',spMiddleware.authenticate,function(req,res,next){
   // If we get here, the user has been authenticated
   // The account object is available at req.user
-});
-
-// Allow anyone to use the public site
-
-app.get('/public/*',function(){
-  res.send('This is the public site, authentication not required');
 });
 ```
 

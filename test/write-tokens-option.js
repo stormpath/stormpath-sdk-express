@@ -55,7 +55,7 @@ describe('writeTokens option',function() {
         });
         app = express();
         app.use(bodyParser.json());
-        app.use(spMiddleware);
+        spMiddleware.attachDefaults(app);
 
         var wait = setInterval(function(){
           /* wait for sp application */

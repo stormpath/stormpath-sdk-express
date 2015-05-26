@@ -52,9 +52,9 @@ describe('the user agent of this library',function(){
     }).listen(0,function(){
       appHref = 'http://0.0.0.0:'+mockApiServer.address().port+'/an-application';
       app = express();
-      app.use(stormpathSdkExpress.createMiddleware({
+      stormpathSdkExpress.createMiddleware({
         appHref: appHref
-      }));
+      });
     });
 
 

@@ -21,8 +21,7 @@ var middlewareFns = fs.readdirSync(path.join(__dirname,'lib','middleware'))
   return map;
 },{});
 
-function autoRouterHandler(req,res,next){
-  var context = this;
+function autoRouterHandler(context,req,res,next){
   var spConfig = context.spConfig;
   function _next(){
     if(url.parse(req.url).pathname===spConfig.tokenEndpoint){
@@ -47,48 +46,85 @@ function autoRouterHandler(req,res,next){
 }
 
 function createMiddleware(spConfig) {
+
+  /*
+    The middleware context is where we maintain everything
+    that Stormpath needs to get work done with this module.
+    It has a Stormpath Client, bound to a Stormpath application.
+    It retains the given config, as well as the properties
+    file that defines all the strings for error messages and
+    user messages.
+   */
   spConfig = typeof spConfig === 'object' ? spConfig : {};
   var context = new MiddlewareContext(spConfig);
   var boundMiddleware = {};
 
   /*
     For each exported middleware function, create a bound version
-    which is bound to the context and assign a reference onto
-    the context which points to the bound function.  The name
-    of the function is the name of the reference.
-   */
-
-  Object.keys(middlewareFns).reduce(function(boundMiddleware,fnName){
-    var boundFn = middlewareFns[fnName].bind(context);
-    Object.defineProperty(context, fnName, {
-      get: function() {
-        return boundFn;
-      }
-    });
-    return context;
-  },context);
+    which is bound to the middleware context
+  */
 
   Object.keys(middlewareFns).reduce(function(boundMiddleware,fnName){
     boundMiddleware[fnName] = middlewareFns[fnName].bind(context);
     return boundMiddleware;
   },boundMiddleware);
 
+  /*
+    For all middleware functions, we want to do CORS filtering
+    first (do we need to add cors handlers)?
+   */
 
-  var autoRtouer = autoRouterHandler.bind(context);
+  Object.keys(boundMiddleware).forEach(function(fnName){
+    var fn = boundMiddleware[fnName];
+    if(fnName!=='corsHandler'){
+      boundMiddleware[fnName] = function corsPrefilter(req,res,next){
+        boundMiddleware.corsHandler(req,res,fn.bind(context,req,res,next));
+      };
+    }
+  });
+
+  /*
+    Attach each bound function to the middleware context, using the
+    function name as the property.  The middleware context then has
+    access to these named functions, so that it can delegate requests
+    to them.
+   */
+
+  Object.keys(boundMiddleware).forEach(function(fnName){
+    context[fnName] = boundMiddleware[fnName];
+  });
+
+  /*
+    We pass along the bound middleware to the "auto router", the
+    "auto router" is the function that is passed to app.use()
+    if you use the statement app.use(stormpathMiddlweare)
+   */
+
+  var autoRtouer = autoRouterHandler.bind(null,context);
   Object.keys(boundMiddleware).reduce(function(autoRtouer,fn){
     autoRtouer[fn]=boundMiddleware[fn];
     return autoRtouer;
   },autoRtouer);
   autoRtouer.getApplication = context.getApplication;
+
+  /*
+    attachDefaults is used to manually bind middleware to
+    specific endpoints and methods, rather than a single middleware
+    that you use with the autoRouter
+   */
+
   autoRtouer.attachDefaults = function(app){
-    app.get(context.spConfig.currentUserEndpoint,context.authenticate.bind(context),context.currentUser.bind(context));
-    app.get(context.spConfig.logoutEndpoint,context.logout.bind(context));
-    app.post(context.spConfig.userCollectionEndpoint,context.register.bind(context));
-    app.post(context.spConfig.tokenEndpoint,context.authenticateForToken.bind(context));
-    app.post(context.spConfig.resendEmailVerificationEndpoint,context.resendEmailVerification.bind(context));
-    app.post(context.spConfig.emailVerificationTokenCollectionEndpoint,context.verifyEmailVerificationToken.bind(context));
-    app.get(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',context.passwordReset.bind(context));
-    app.post(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',context.passwordReset.bind(context));
+    app.get(context.spConfig.currentUserEndpoint,
+      context.authenticate.bind(context),
+      context.currentUser.bind(context)
+    );
+    app.get(context.spConfig.logoutEndpoint,boundMiddleware.logout);
+    app.post(context.spConfig.userCollectionEndpoint,boundMiddleware.register);
+    app.post(context.spConfig.tokenEndpoint,boundMiddleware.authenticateForToken);
+    app.post(context.spConfig.resendEmailVerificationEndpoint,boundMiddleware.resendEmailVerification);
+    app.post(context.spConfig.emailVerificationTokenCollectionEndpoint,boundMiddleware.verifyEmailVerificationToken);
+    app.get(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',boundMiddleware.passwordReset);
+    app.post(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',boundMiddleware.passwordReset);
   };
 
   return autoRtouer;
