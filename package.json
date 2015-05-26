@@ -1,6 +1,6 @@
 {
   "name": "stormpath-sdk-express",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "index.js",
   "description": "Official Stormpath SDK for Express.js",
   "keywords": [
