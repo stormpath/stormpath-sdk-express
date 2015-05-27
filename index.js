@@ -106,6 +106,7 @@ function createMiddleware(spConfig) {
     return autoRtouer;
   },autoRtouer);
   autoRtouer.getApplication = context.getApplication;
+  autoRtouer.spClient = context.spClient;
 
   /*
     attachDefaults is used to manually bind middleware to
