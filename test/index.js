@@ -108,6 +108,16 @@ describe('createMiddleware',function(){
       });
     },properties.errors.MISSING_APP_HREF);
   });
+
+  it('should expose the stormpath client for use',function(){
+    var spMiddleware = stormpathSdkExpress.createMiddleware({
+      apiKeyId: '1',
+      apiKeySecret: '1',
+      appHref: 'x'
+    });
+    assert(spMiddleware.spClient);
+    assert(spMiddleware.spClient.getCurrentTenant);
+  });
 });
 
 

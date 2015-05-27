@@ -65,6 +65,7 @@ application, which is part of our [Stormpath AngularJS SDK](https://github.com/s
   * [forceHttps](#forceHttps)
   * [postRegistrationHandler](#postRegistrationHandler)
   * [scopeFactory](#scopeFactory)
+  * [spClient](#spClient)
   * [tokenEndpoint](#tokenEndpoint)
   * [writeAccessTokenToCookie](#access-token-cookie)
   * [writeAccessTokenResponse](#access-token-response)
@@ -427,6 +428,18 @@ var spConfig = {
 ```
 
 
+
+#### <a name="spClient"></a> spClient
+
+This is a reference to the Stormpath Client that was created by this module,
+based on the [`spConfig`](#spConfig) that was passed.
+
+This is the client that is exported by the
+[Stormpath Node SDK][stormpath-node-sdk], you can use it to achieve all the
+Stormpath API functionality that is supported by that SDK.  Full documentation
+here:
+
+http://docs.stormpath.com/nodejs/api/home
 
 
 #### <a name="tokenEndpoint"></a> Token Endpoint
