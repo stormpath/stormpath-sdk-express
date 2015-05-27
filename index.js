@@ -100,13 +100,13 @@ function createMiddleware(spConfig) {
     if you use the statement app.use(stormpathMiddlweare)
    */
 
-  var autoRtouer = autoRouterHandler.bind(null,context);
-  Object.keys(boundMiddleware).reduce(function(autoRtouer,fn){
-    autoRtouer[fn]=boundMiddleware[fn];
-    return autoRtouer;
-  },autoRtouer);
-  autoRtouer.getApplication = context.getApplication;
-  autoRtouer.spClient = context.spClient;
+  var autoRouter = autoRouterHandler.bind(null,context);
+  Object.keys(boundMiddleware).reduce(function(autoRouter,fn){
+    autoRouter[fn]=boundMiddleware[fn];
+    return autoRouter;
+  },autoRouter);
+  autoRouter.getApplication = context.getApplication;
+  autoRouter.spClient = context.spClient;
 
   /*
     attachDefaults is used to manually bind middleware to
@@ -114,7 +114,7 @@ function createMiddleware(spConfig) {
     that you use with the autoRouter
    */
 
-  autoRtouer.attachDefaults = function(app){
+  autoRouter.attachDefaults = function(app){
     app.get(context.spConfig.currentUserEndpoint,
       context.authenticate.bind(context),
       context.currentUser.bind(context)
@@ -128,7 +128,7 @@ function createMiddleware(spConfig) {
     app.post(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',boundMiddleware.passwordReset);
   };
 
-  return autoRtouer;
+  return autoRouter;
 }
 
 
