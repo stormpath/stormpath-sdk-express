@@ -122,10 +122,14 @@ function createMiddleware(spConfig) {
     app.get(context.spConfig.logoutEndpoint,boundMiddleware.logout);
     app.post(context.spConfig.userCollectionEndpoint,boundMiddleware.register);
     app.post(context.spConfig.tokenEndpoint,boundMiddleware.authenticateForToken);
+    app.options(context.spConfig.tokenEndpoint,boundMiddleware.authenticateForToken);
     app.post(context.spConfig.resendEmailVerificationEndpoint,boundMiddleware.resendEmailVerification);
+    app.options(context.spConfig.resendEmailVerificationEndpoint,boundMiddleware.resendEmailVerification);
     app.post(context.spConfig.emailVerificationTokenCollectionEndpoint,boundMiddleware.verifyEmailVerificationToken);
+    app.options(context.spConfig.emailVerificationTokenCollectionEndpoint,boundMiddleware.verifyEmailVerificationToken);
     app.get(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',boundMiddleware.passwordReset);
     app.post(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',boundMiddleware.passwordReset);
+    app.options(context.spConfig.passwordResetTokenCollectionEndpoint +'/:sptoken?',boundMiddleware.passwordReset);
   };
 
   return autoRouter;
