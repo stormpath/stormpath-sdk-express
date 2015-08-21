@@ -26,7 +26,6 @@ function loginSuccessFixture2(done){
 
 
 function loginSuccessFixture(base,expressApp) {
-
   var appUri = '/v1/application/'+uuid();
   var accountUri = '/v1/accounts/'+uuid();
 
@@ -34,14 +33,18 @@ function loginSuccessFixture(base,expressApp) {
   var loginAttemptsUri = appUri + '/loginAttempts';
   var loginAttemptsHref = base + loginAttemptsUri;
   var accountHref = base+accountUri;
+  var accountsUri = '/v1/applications/'+uuid() + '/accounts';
+  var accountsHref = base+accountsUri;
 
   expressApp.get(appUri,function(req,res){
-    res.json({href:appHref,loginAttempts:{href:loginAttemptsHref}});
+    res.json({href:appHref,
+      loginAttempts:{href:loginAttemptsHref},
+      accounts:{href:accountsHref}});
   });
 
-  expressApp.get(accountUri,function(req,res){
+  expressApp.post(accountsUri,function(req,res){
     res.json({
-      href:accountHref,
+      href:accountsHref,
       status: "ENABLED"
     });
   });
@@ -53,6 +56,7 @@ function loginSuccessFixture(base,expressApp) {
       }
     });
   });
+
   return {
     appHref: appHref,
     accountHref: accountHref

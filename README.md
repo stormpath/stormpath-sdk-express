@@ -81,6 +81,7 @@ application, which is part of our [Stormpath AngularJS SDK](https://github.com/s
  * [authenticateCookie](#authenticateCookie)
  * [authenticateForToken](#authenticateForToken)
  * [authenticateUsernamePasswordForToken](#authenticateUsernamePasswordForToken)
+ * [authenticateSocialForToken](#authenticateSocialForToken)
  * [groupsRequired](#groupsRequired)
  * [logout](#logout)
  * [writeToken](#writeToken)
@@ -158,11 +159,12 @@ Doing this will enable the following functionality:
 [`authenticate`](#authenticate) middleware, which will assert that the user has
 an existing access token.  If this is not true, an error response will be sent.
 
-* The endpoint `/oauth/token` will accept Client Password or Client Credential grant
-requests and respond with an access token if authentication is successful.
-Depending on the grant type (`password` or `client_credentials`) it delegates to
+* The endpoint `/oauth/token` will accept Client Password, Client Credential, or
+ Social Login grant requests and respond with an access token if authentication is successful.
+Depending on the grant type (`password`, `client_credentials`, or 'social') it delegates to
 [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken)
-or [`authenticateApiKeyForToken`](#authenticateApiKeyForToken).
+, [`authenticateApiKeyForToken`](#authenticateApiKeyForToken) or
+[`authenticateSocialForToken`](#authenticateSocialForToken).
 
 * The `/logout` endpoint will be provided for ending cookie-based sessions.
 
@@ -220,7 +222,7 @@ var spConfig = {
 }
 ```
 
-Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken), [`authenticateApiKeyForToken`](#authenticateApiKeyForToken)
+Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken), [`authenticateApiKeyForToken`](#authenticateApiKeyForToken), [`authenticateSocialForToken`](#authenticateSocialForToken)
 
 
 
@@ -250,7 +252,7 @@ var spConfig = {
 }
 ```
 
-Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken), [`authenticateCookie`](#authenticateCookie)
+Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken), [`authenticateCookie`](#authenticateCookie), [`authenticateSocialForToken`](#authenticateSocialForToken)
 
 
 
@@ -275,7 +277,7 @@ var spConfig = {
 
 When enabled, the response body will be a [`TokenResponse`](#TokenResponse)
 
-Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken)
+Used by [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken), [`authenticateSocialForToken`](#authenticateSocialForToken)
 
 
 
@@ -683,14 +685,43 @@ var app = express();
 app.post('/login',spMiddleware.authenticateUsernamePasswordForToken);
 ````
 
+### <a name="authenticateSocialForToken"></a> authenticateSocialForToken
+
+Expects a JSON POST body, which has a `providerId` and `accessToken` field, and a
+grant type request of `social`.
+
+**Example: posting providerId and accessToken to the token endpoint**
+```
+POST /oauth/tokens?grant_type=social
+
+{
+  "providerId": "facebook",
+  "accessToken": "aTokenReceivedFromFacebookLogin"
+}
+```
+
+If the supplied accessToken is valid for the provider, this function will respond
+with an access token cookie or access token response, depending on the configuration
+set by [`writeAccessTokenResponse`](#access-token-response) and
+[`writeAccessTokenToCookie`](#access-token-cookie)
+
+**Example: accept only social for token exchange**
+````javascript
+var spMiddleware = stormpathExpressSdk.createMiddleware({/* options */})
+
+var app = express();
+
+app.post('/login',spMiddleware.authenticateSocialForToken);
+````
 
 
 
 #### <a name="authenticateForToken"></a> authenticateForToken
 
 This is a convenience middleware that will inspect the request
-and delegate to [`authenticateApiKeyForToken`](#authenticateApiKeyForToken) or
+and delegate to [`authenticateApiKeyForToken`](#authenticateApiKeyForToken),
 [`authenticateUsernamePasswordForToken`](#authenticateUsernamePasswordForToken)
+or [`authenticateSocialForToken`](#authenticateSocialForToken)
 
 **Example: manually defining the token endpoint**
 ````javascript
