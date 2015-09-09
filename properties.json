@@ -10,6 +10,7 @@
     "authentication":{
       "UNAUTHENTICATED": "Authentication required",
       "BAD_PASSWORD_BODY": "Missing username or password in post body",
+      "BAD_ACCESS_TOKEN_BODY": "Missing providerId or accessToken in post body",
       "UNKNOWN": "An error has occurred during authentication",
       "UNSUPPORTED_GRANT_TYPE": "Unsupported grant type"
     },
