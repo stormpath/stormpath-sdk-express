@@ -36,18 +36,21 @@ function loginSuccessFixture(base,expressApp) {
   var accountsUri = '/v1/applications/'+uuid() + '/accounts';
   var accountsHref = base+accountsUri;
 
+  function mockAccountResponse(req,res){
+    res.json({
+      href:accountsHref,
+      status: "ENABLED"
+    });
+  }
+
   expressApp.get(appUri,function(req,res){
     res.json({href:appHref,
       loginAttempts:{href:loginAttemptsHref},
       accounts:{href:accountsHref}});
   });
 
-  expressApp.post(accountsUri,function(req,res){
-    res.json({
-      href:accountsHref,
-      status: "ENABLED"
-    });
-  });
+  expressApp.get(accountUri,mockAccountResponse);
+  expressApp.post(accountsUri,mockAccountResponse);
 
   expressApp.post(loginAttemptsUri,function(req,res){
     res.json({
