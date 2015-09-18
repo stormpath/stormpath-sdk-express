@@ -115,6 +115,7 @@ function createMiddleware(spConfig) {
    */
 
   autoRouter.attachDefaults = function(app){
+    app.set('stormpathMiddleware',context);
     app.get(context.spConfig.currentUserEndpoint,
       context.authenticate.bind(context),
       context.currentUser.bind(context)
