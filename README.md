@@ -1,10 +1,21 @@
-# Stormpath Express.js SDK [BETA]
+# Stormpath Express.js SDK [DERECATED]
 
 [![NPM Version](https://img.shields.io/npm/v/stormpath-sdk-express.svg?style=flat)](https://npmjs.org/package/stormpath-sdk-express)
 [![NPM Downloads](http://img.shields.io/npm/dm/stormpath-sdk-express.svg?style=flat)](https://npmjs.org/package/stormpath-sdk-express)
 [![Build Status](https://img.shields.io/travis/stormpath/stormpath-sdk-express.svg?style=flat)](https://travis-ci.org/stormpath/stormpath-sdk-express)
 
-## This module is BETA
+## DEPRECATION NOTICE
+
+This module has been replaced by [express-stormpath][] and will no longer be
+maintained.  Please see [UPGRADING][] for detailed information on how to
+migrate your application to the [express-stormpath][] module.
+
+If you were using this module with [stormpath-sdk-angular][], you will
+you will have to use version 0.6.0 of [stormpath-sdk-angular][] if you wish
+to continue using this module.  If you want to upgrade [stormpath-sdk-angular][]
+to 0.7.0, you will need to start using [express-stormpath][].
+
+## Documentation
 
 The primary use-case of this module is to
 provide a lean set of Express.js middleware that supports our new
@@ -918,7 +929,7 @@ This project is open-source via the [Apache 2.0 License](http://www.apache.org/l
 [nJwt]: https://github.com/jwtk/njwt "nJWt"
 [stormpath]: https://stormpath.com "Stormpath"
 [stormpath-sdk-angular]: https://github.com/stormpath/stormpath-angular "Stormpath AngularJS SDK"
-[stormpath-express]: https://github.com/stormpath/stormpath-express "Stormpath"
+[express-stormpath]: https://github.com/stormpath/express-stormpath "Stormpath"
 [stormpath-node-sdk]: https://github.com/stormpath/stormpath-sdk-node "Stormpath Node SDK"
 [stormpath-api-key-docs]: http://docs.stormpath.com/guides/api-key-management/ "Stormpath Api Key Management"
 [Username and Password authentication]: http://docs.stormpath.com/rest/product-guide/#authenticate-an-account "Username and Password authentication"
@@ -926,3 +937,4 @@ This project is open-source via the [Apache 2.0 License](http://www.apache.org/l
 [Cross-Site Request Forgery]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery "Cross-Site Request Forgery (CSRF)"
 [trust-proxy-option]: http://expressjs.com/4x/api.html#trust.proxy.options.table
 [express.req.protocol]: http://expressjs.com/4x/api.html#req.protocol
+[UPGRADING]: upgrading.md
