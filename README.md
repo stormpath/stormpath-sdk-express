@@ -10,6 +10,8 @@ This module has been replaced by [express-stormpath][] and will no longer be
 maintained.  Please see [UPGRADING.md][] for detailed information on how to
 migrate your application to the [express-stormpath][] module.
 
+If you need assistance, please contact support@stormpath.com - we're happy to help!
+
 If you were using this module with [stormpath-sdk-angular][], you will
 you will have to use version 0.6.0 of [stormpath-sdk-angular][] if you wish
 to continue using this module.  If you want to upgrade [stormpath-sdk-angular][]
