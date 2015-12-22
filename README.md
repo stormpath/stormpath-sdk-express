@@ -15,7 +15,7 @@ you will have to use version 0.6.0 of [stormpath-sdk-angular][] if you wish
 to continue using this module.  If you want to upgrade [stormpath-sdk-angular][]
 to 0.7.0, you will need to start using [express-stormpath][].
 
-## Documentation
+## Documentation [DEPRECATED]
 
 The primary use-case of this module is to
 provide a lean set of Express.js middleware that supports our new
@@ -52,13 +52,6 @@ thoughts! support@stormpath.com
 development time with instant-on, scalable user infrastructure.  Stormpath's
 intuitive API and expert support make it easy for developers to authenticate,
 manage, and secure users and roles in any application.
-
-## Example Integration
-
-You can see an example integration in the
-[Dashboard App Example](https://github.com/stormpath/stormpath-sdk-angularjs/tree/master/example/dashboard-app)
-application, which is part of our [Stormpath AngularJS SDK](https://github.com/stormpath/stormpath-angular)
-
 
 ## Table of Contents
 
