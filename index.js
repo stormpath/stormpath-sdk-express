@@ -76,7 +76,7 @@ function createMiddleware(spConfig) {
 
   Object.keys(boundMiddleware).forEach(function(fnName){
     var fn = boundMiddleware[fnName];
-    if(fnName!=='corsHandler' && fnName!=='groupsRequired'){
+    if(fnName!=='corsHandler' && fnName!=='groupsRequired' && fnName!=='groupRequired'){
       boundMiddleware[fnName] = function corsPrefilter(req,res,next){
         boundMiddleware.corsHandler(req,res,fn.bind(context,req,res,next));
       };
