@@ -7,7 +7,7 @@
 ## DEPRECATION NOTICE
 
 This module has been replaced by [express-stormpath][] and will no longer be
-maintained.  Please see [UPGRADING][] for detailed information on how to
+maintained.  Please see [UPGRADING.md][] for detailed information on how to
 migrate your application to the [express-stormpath][] module.
 
 If you were using this module with [stormpath-sdk-angular][], you will
@@ -937,4 +937,4 @@ This project is open-source via the [Apache 2.0 License](http://www.apache.org/l
 [Cross-Site Request Forgery]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery "Cross-Site Request Forgery (CSRF)"
 [trust-proxy-option]: http://expressjs.com/4x/api.html#trust.proxy.options.table
 [express.req.protocol]: http://expressjs.com/4x/api.html#req.protocol
-[UPGRADING]: upgrading.md
+[UPGRADING.md]: UPGRADING.md
