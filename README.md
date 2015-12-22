@@ -1,4 +1,4 @@
-# Stormpath Express.js SDK [DERECATED]
+# Stormpath Express.js SDK [DEPRECATED]
 
 [![NPM Version](https://img.shields.io/npm/v/stormpath-sdk-express.svg?style=flat)](https://npmjs.org/package/stormpath-sdk-express)
 [![NPM Downloads](http://img.shields.io/npm/dm/stormpath-sdk-express.svg?style=flat)](https://npmjs.org/package/stormpath-sdk-express)
