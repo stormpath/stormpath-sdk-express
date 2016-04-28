@@ -33,9 +33,13 @@ spMiddleware.attachDefaults(app);
 With `express-stormpath` the initialization now looks like this:
 
 ```javascript
-var stormpath = require('express-stormpath');
 app.use(stormpath.init(app, {
-  website: true, // For websites and Single-page applications
+  web: {
+    spa: {
+      enabled: true,
+      view: path.join(__dirname, 'public', 'index.html') // the path to your Angular index.html
+    }
+  }
 }));
 ```
 
@@ -90,7 +94,7 @@ app.get('/api/*',spMiddleware.authenticate,function(req,res,next){
 
 Now there are two options.
 
-If you are building a traditional web app or single-page app (Angular), then you
+If you are building a traditional web app or single-page app (Angular) that can use cookies, then you
 want to use `stormpath.loginRequired`
 
 
