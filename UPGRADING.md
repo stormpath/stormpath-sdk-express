@@ -116,5 +116,9 @@ app.get('/api/*',stormpath.apiAuthenticationRequired,function(req,res,next){
 });
 ```
 
+### Angular SDK Upgrade required
+
+When moving to [`express-stormpath`][], you will need to upgrade the [Stormpath Angular SDK][] to version 1.0.0 or greater.  This upgrade should not affect your existing Anagular application, as the changes are internal to the library and how it communicates with the [`express-stormpath`][] backend.
 
 [`express-stormpath`]: https://github.com/stormpath/express-stormpath
+[Stormpath Angular SDK]: https://github.com/stormpath/stormpath-sdk-angularjs
