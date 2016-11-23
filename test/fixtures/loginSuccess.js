@@ -8,7 +8,7 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var http = require('http');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 function loginSuccessFixture2(done){
   var app = express();

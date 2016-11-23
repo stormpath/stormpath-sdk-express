@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
 var request = require('supertest');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 var loginSuccessFixture = require('./fixtures/loginSuccess');
 var mockLoginPost = {username:'abc',password:'123'};
